@@ -49,10 +49,10 @@ export default class SwapiService {
     return this._transformStarship(starship);
   }
 
-  _extractId(planet) {
-    console.log(`_extractId:`, planet);
+  _extractId(item) {
+    console.log(`_extractId:`, item);
     const idRegExp = /\/([0-9]*)\/$/;
-    return planet.url.match(idRegExp)[1];
+    return item.url.match(idRegExp)[1];
   }
 
   _transformPlanet(planet) {

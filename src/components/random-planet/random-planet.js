@@ -6,11 +6,7 @@ import './random-planet.css';
 export default class RandomPlanet extends Component {
 
   state = {
-    id: null,
-    name: null,
-    population: null,
-    rotationPeriod: null,
-    diameter: null,
+    planet: {}
   };
 
   constructor() {
@@ -25,23 +21,21 @@ export default class RandomPlanet extends Component {
 
     this.swapiService
       .getPlanet(id)
-      .then((planet) => {
-        this.setState({
-          id,
-          name: planet.name,
-          population: planet.population,
-          rotationPeriod: planet.rotation_period,
-          diameter: planet.diameter,
-        });
-      });
+      .then(this.onPlanetLoaded);
   };
 
+  onPlanetLoaded = (planet) => {
+    this.setState({ planet });
+  }
+
   render() {
-    const {id,
-           name,
-           population,
-           rotationPeriod,
-           diameter
+    const { planet: {
+              id,
+              name,
+              population,
+              rotationPeriod,
+              diameter
+            }
           } = this.state;
 
     return (

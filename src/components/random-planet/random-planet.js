@@ -5,6 +5,7 @@ import Spinner from '../spinner'
 import ErrorIndicator from '../error-indicator'
 
 import './random-planet.css';
+import { clearTimeout } from 'timers';
 
 export default class RandomPlanet extends Component {
 
@@ -15,18 +16,25 @@ export default class RandomPlanet extends Component {
   };
 
   componentDidMount() {
-    this.updatePlanet();
+    this.interval = setTimeout(this.updatePlanet, 0);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.interval);
   }
 
   swapiService = new SwapiService();
 
-  updatePlanet() {
+  updatePlanet = () => {
     console.log(`updatePlanet`);
     const id = Math.floor(Math.random() * 20) + 2;
 
     this.swapiService
       .getPlanet(id)
       .then(this.onPlanetLoaded)
+      .then(() => {
+        this.interval = setTimeout(this.updatePlanet, 5000); 
+      })
       .catch(this.onError);
   };
 

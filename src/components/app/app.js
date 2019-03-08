@@ -9,7 +9,7 @@ import './app.css';
 
 class App extends Component {
   state = {
-    selectedItem: null,
+    selectedItem: 1,
   }
 
   onItemSelected = (id) => {

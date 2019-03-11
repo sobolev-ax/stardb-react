@@ -53,7 +53,6 @@ export default class PersonDetails extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    console.warn(prevProps.selectedItem, this.props.selectedItem);
     if (prevProps.selectedItem === this.props.selectedItem) return;
 
     this.updatePerson();

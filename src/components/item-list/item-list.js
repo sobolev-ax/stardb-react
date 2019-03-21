@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/swapi-service'
 import Spinner from '../spinner'
 import ErrorIndicator from '../error-indicator'
 
@@ -14,13 +13,12 @@ export default class ItemList extends Component {
   }
 
   componentDidMount() {
-    this.swapiService
-      .getAllPeople()
+    const { getData } = this.props;
+
+    getData()
       .then(this.onItemsLoaded)
       .catch(this.onError)
   }
-
-  swapiService = new SwapiService();
 
   renderItems(items) {
     console.log('renderItems', items);

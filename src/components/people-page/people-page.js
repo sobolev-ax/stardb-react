@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ItemList from '../item-list';
 import PersonDetails from '../person-details';
-import ErrorIndicator from '../error-indicator'
+import ErrorIndicator from '../error-indicator';
+import Row from '../row';
 import SwapiService from '../../services/swapi-service';
 
 import './people-page.css';
@@ -60,24 +61,12 @@ export default class PeoplePage extends Component{
     const personDetails = <PersonDetails selectedItem={this.state.selectedItem}/>
 
     return(
-      <div className="row mb2">
-          <div className="col-md-6">
-            {itemListPeoples}
-          </div>
-          <div className="col-md-6">
-            {personDetails}
-          </div>
-          <div className="col-md-6">
-            {itemListPlanets}
-          </div>
-          <div className="col-md-6">
-          </div>
-          <div className="col-md-6">
-            {itemListStarships}
-          </div>
-          <div className="col-md-6">
-          </div>
-      </div>
+      <React.Fragment>
+        <Row left={itemListPeoples} right={personDetails} />
+        <Row left={itemListPlanets} />
+        <Row left={itemListStarships} />
+        <Row left={<h2>Hello</h2>} right={<h2>World!</h2>} />
+      </React.Fragment>
     );
   };
 };

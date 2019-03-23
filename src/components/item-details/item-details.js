@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service'
-import PersonView from './person-view'
+import ItemView from './item-view'
 import Spinner from '../spinner'
 import ErrorIndicator from '../error-indicator'
 
-import './person-details.css';
+import './item-details.css';
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
 
   swapiService = new SwapiService();
 
   state = {
-    person: null,
+    item: null,
     loading: true,
     error: false,
   };
 
-  updatePerson() {
+  updateItem() {
     const { selectedItem } = this.props;
 
     if(!selectedItem) {
@@ -35,13 +35,13 @@ export default class PersonDetails extends Component {
 
     this.swapiService
       .getPerson(selectedItem)
-      .then(this.onPersonLoaded)
+      .then(this.onItemLoaded)
       .catch(this.onError);
   };
 
-  onPersonLoaded = (person) => {
-    console.log(`onPersonLoaded:`, person);
-    this.setState({ person, loading: false, error: false });
+  onItemLoaded = (item) => {
+    console.log(`onItemLoaded:`, item);
+    this.setState({ item, loading: false, error: false });
   }
 
   onError = () => {
@@ -49,27 +49,27 @@ export default class PersonDetails extends Component {
   };
 
   componentDidMount() {
-    this.updatePerson();
+    this.updateItem();
   };
 
   componentDidUpdate(prevProps) {
     if (prevProps.selectedItem === this.props.selectedItem) return;
 
-    this.updatePerson();
+    this.updateItem();
   };
 
   render() {
-    const { person, loading, error } = this.state;
+    const { item, loading, error } = this.state;
 
-    const hasData = !(loading || error) && person;
+    const hasData = !(loading || error) && item;
     const hasInstruction = !loading && !error & !hasData;
     const errorMs = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner /> : null;
-    const instruction = hasInstruction ? <span>Select a person from a list</span> : null;
-    const content = hasData ? <PersonView person={ person } /> : null ;
+    const instruction = hasInstruction ? <span>Select a item from a list</span> : null;
+    const content = hasData ? <ItemView item={ item } /> : null ;
 
     return (
-      <div className="person-details card">
+      <div className="item-details card">
         { errorMs }
         { spinner }
         { content }

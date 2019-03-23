@@ -33,35 +33,47 @@ export default class PeoplePage extends Component{
     const { hasError } = this.state;
 
     if (hasError) return <ErrorIndicator />
-     
+
+    const itemListPeoples = <ItemList onItemSelected={this.onItemSelected}
+                                      getData={this.swapiService.getAllPeople}
+                                      renderItems={
+                                        ({name, gender, birthYear}) =>
+                                          `${name} (${gender} : ${birthYear})`
+                                      } />
+
+    const itemListPlanets = <ItemList onItemSelected={this.onItemSelected}
+                                      getData={this.swapiService.getAllPlanets}
+                                      renderItems={
+                                        ({name, diameter, population}) => (
+                                          <span>
+                                            {name}
+                                            <ul>
+                                              <li>diameter: {diameter}</li>
+                                              <li>population: {population}</li>
+                                            </ul>
+                                          </span>
+                                       )} />
+
+    const itemListStarships = <ItemList onItemSelected={this.onItemSelected}
+                                        getData={this.swapiService.getAllStarships} />
+
+    const personDetails = <PersonDetails selectedItem={this.state.selectedItem}/>
+
     return(
       <div className="row mb2">
           <div className="col-md-6">
-            <ItemList onItemSelected={this.onItemSelected}
-                      getData={this.swapiService.getAllPeople}
-                      renderItems={({name, gender, birthYear}) => `${name} (${gender} : ${birthYear})`} />
+            {itemListPeoples}
           </div>
           <div className="col-md-6">
-            <PersonDetails selectedItem={this.state.selectedItem}/>
+            {personDetails}
           </div>
           <div className="col-md-6">
-            <ItemList onItemSelected={this.onItemSelected} 
-                      getData={this.swapiService.getAllPlanets}
-                      renderItems={({name, diameter, population}) => (
-                        <span>
-                          {name}
-                          <ul>
-                            <li>diameter: {diameter}</li>
-                            <li>population: {population}</li>
-                          </ul>
-                        </span>
-                      )} />
+            {itemListPlanets}
           </div>
           <div className="col-md-6">
           </div>
           <div className="col-md-6">
-            <ItemList onItemSelected={this.onItemSelected} 
-                      getData={this.swapiService.getAllStarships} />
+            {itemListStarships}
           </div>
           <div className="col-md-6">
           </div>

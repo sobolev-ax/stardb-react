@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ItemList from '../item-list';
 import PersonDetails from '../person-details';
-import ErrorIndicator from '../error-indicator';
+import ErrorBoundry from '../error-boundry';
 import Row from '../row';
 import SwapiService from '../../services/swapi-service';
 
@@ -13,7 +13,6 @@ export default class PeoplePage extends Component{
 
   state = {
     selectedItem: 1,
-    hasError: false,
   }
 
   onItemSelected = (id) => {
@@ -23,18 +22,7 @@ export default class PeoplePage extends Component{
     });
   };
 
-  componentDidCatch(err) {
-    console.warn('componentDidCatch: ', err);
-    this.setState({
-      hasError: true,
-    });
-  };
-
   render() {
-    const { hasError } = this.state;
-
-    if (hasError) return <ErrorIndicator />
-
     const itemListPeoples = <ItemList onItemSelected={this.onItemSelected}
                                       getData={this.swapiService.getAllPeople}
                                       renderItems={
@@ -58,15 +46,17 @@ export default class PeoplePage extends Component{
     const itemListStarships = <ItemList onItemSelected={this.onItemSelected}
                                         getData={this.swapiService.getAllStarships} />
 
-    const personDetails = <PersonDetails selectedItem={this.state.selectedItem}/>
+    const personDetails = <ErrorBoundry>
+                            <PersonDetails selectedItem={this.state.selectedItem}/>
+                          </ErrorBoundry>
 
     return(
-      <React.Fragment>
+      <ErrorBoundry>
         <Row left={itemListPeoples} right={personDetails} />
         <Row left={itemListPlanets} />
         <Row left={itemListStarships} />
         <Row left={<h2>Hello</h2>} right={<h2>World!</h2>} />
-      </React.Fragment>
+      </ErrorBoundry>
     );
   };
 };

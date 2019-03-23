@@ -39,14 +39,23 @@ export default class PeoplePage extends Component{
           <div className="col-md-6">
             <ItemList onItemSelected={this.onItemSelected}
                       getData={this.swapiService.getAllPeople}
-                      listNames={['name', 'gender']} />
+                      renderItems={({name, gender, birthYear}) => `${name} (${gender} : ${birthYear})`} />
           </div>
           <div className="col-md-6">
             <PersonDetails selectedItem={this.state.selectedItem}/>
           </div>
           <div className="col-md-6">
             <ItemList onItemSelected={this.onItemSelected} 
-                      getData={this.swapiService.getAllPlanets} />
+                      getData={this.swapiService.getAllPlanets}
+                      renderItems={({name, diameter, population}) => (
+                        <span>
+                          {name}
+                          <ul>
+                            <li>diameter: {diameter}</li>
+                            <li>population: {population}</li>
+                          </ul>
+                        </span>
+                      )} />
           </div>
           <div className="col-md-6">
           </div>

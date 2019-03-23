@@ -20,14 +20,17 @@ export default class ItemList extends Component {
       .catch(this.onError)
   }
 
-  renderItems(items, names = ['name']) {
+  renderItems(items) {
     console.log('renderItems', items);
+    const { renderItems } = this.props;
+
     return items.map((item) => {
+      const { id, name } = item;
       return (
-        <li key={item.id}
-          onClick={() => this.props.onItemSelected(Number(item.id))}
+        <li key={id}
+          onClick={() => this.props.onItemSelected(Number(id))}
           className="list-group-item">
-            {names.map((n) => `${item[n]} `)}
+            {renderItems ? renderItems(item) : name}
         </li>
       );
     });
@@ -51,13 +54,12 @@ export default class ItemList extends Component {
 
   render() {
     const { items, loading, error } = this.state;
-    const { listNames } = this.props;
 
     const hasItems = !(error || loading);
 
     const errorMs = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner /> : null;
-    const itemsList = hasItems ? this.renderItems(items, listNames) : null;
+    const itemsList = hasItems ? this.renderItems(items) : null;
 
     return (
       <ul className="item-list list-group">

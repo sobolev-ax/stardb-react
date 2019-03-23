@@ -14,10 +14,11 @@ export default class ItemDetails extends Component {
     item: null,
     loading: true,
     error: false,
+    image: null
   };
 
   updateItem() {
-    const { selectedItem } = this.props;
+    const { selectedItem, getData } = this.props;
 
     if(!selectedItem) {
       this.setState({
@@ -33,16 +34,22 @@ export default class ItemDetails extends Component {
       error: false,
     });
 
-    this.swapiService
-      .getPerson(selectedItem)
+    getData(selectedItem)
       .then(this.onItemLoaded)
       .catch(this.onError);
   };
 
   onItemLoaded = (item) => {
     console.log(`onItemLoaded:`, item);
-    this.setState({ item, loading: false, error: false });
-  }
+    const { getImage } = this.props;
+
+    this.setState({
+      item,
+      loading: false,
+      error: false,
+      image: getImage(item),
+    });
+  };
 
   onError = () => {
     this.setState({ loading: false, error: true });
@@ -59,14 +66,14 @@ export default class ItemDetails extends Component {
   };
 
   render() {
-    const { item, loading, error } = this.state;
+    const { item, loading, error, image } = this.state;
 
     const hasData = !(loading || error) && item;
     const hasInstruction = !loading && !error & !hasData;
     const errorMs = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner /> : null;
     const instruction = hasInstruction ? <span>Select a item from a list</span> : null;
-    const content = hasData ? <ItemView item={ item } /> : null ;
+    const content = hasData ? <ItemView item={ item } image={image} /> : null ;
 
     return (
       <div className="item-details card">

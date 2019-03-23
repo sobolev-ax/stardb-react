@@ -23,6 +23,14 @@ export default class PeoplePage extends Component{
   };
 
   render() {
+    const { getPerson,
+            getImagePerson,
+            getPlanet,
+            getImagePlanet,
+            getStarship,
+            getImageStarship,
+          } = this.swapiService;
+
     const itemListPeoples = <ItemList onItemSelected={this.onItemSelected}
                                       getData={this.swapiService.getAllPeople}
                                       renderItems={
@@ -46,15 +54,29 @@ export default class PeoplePage extends Component{
     const itemListStarships = <ItemList onItemSelected={this.onItemSelected}
                                         getData={this.swapiService.getAllStarships} />
 
-    const itemDetails = <ErrorBoundry>
-                            <ItemDetails selectedItem={this.state.selectedItem}/>
-                          </ErrorBoundry>
+    const personDetails = <ErrorBoundry>
+      <ItemDetails selectedItem={this.state.selectedItem}
+                   getData={getPerson}
+                   getImage={getImagePerson} />
+    </ErrorBoundry>
+
+    const planetDetails = <ErrorBoundry>
+      <ItemDetails selectedItem={2}
+                   getData={getPlanet}
+                   getImage={getImagePlanet} />
+    </ErrorBoundry>
+
+    const starshipDetails = <ErrorBoundry>
+      <ItemDetails selectedItem={5}
+                  getData={getStarship}
+                  getImage={getImageStarship} />
+    </ErrorBoundry>
 
     return(
       <ErrorBoundry>
-        <Row left={itemListPeoples} right={itemDetails} />
-        <Row left={itemListPlanets} />
-        <Row left={itemListStarships} />
+        <Row left={itemListPeoples} right={personDetails} />
+        <Row left={itemListPlanets} right={planetDetails} />
+        <Row left={itemListStarships} right={starshipDetails} />
         <Row left={<h2>Hello</h2>} right={<h2>World!</h2>} />
       </ErrorBoundry>
     );

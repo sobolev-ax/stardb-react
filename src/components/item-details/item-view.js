@@ -1,12 +1,14 @@
 import React from 'react';
 
-const ItemView= ({ item }) => {
+const ItemView= ({ item, image }) => {
   const { id, name, gender, birthYear, eyeColor } = item;
+
+  const imageElement = !image ? null :
+    <img className="item-image" alt={name} src={image} />
+
   return (
     <React.Fragment>
-      <img className="item-image"
-             alt="item"
-             src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+        {imageElement}
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">

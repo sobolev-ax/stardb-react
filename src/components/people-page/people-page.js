@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ItemList from '../item-list';
-import ItemDetails from '../item-details';
+import ItemDetails, { Record } from '../item-details';
 import ErrorBoundry from '../error-boundry';
 import Row from '../row';
 import SwapiService from '../../services/swapi-service';
@@ -57,19 +57,31 @@ export default class PeoplePage extends Component{
     const personDetails = <ErrorBoundry>
       <ItemDetails selectedItem={this.state.selectedItem}
                    getData={getPerson}
-                   getImage={getImagePerson} />
+                   getImage={getImagePerson}>
+        <Record label="Gender" field="gender" />
+        <Record label="Birth Year" field="birthYear" />
+        <Record label="Eye Color" field="EyeColor" />
+      </ItemDetails>
     </ErrorBoundry>
 
     const planetDetails = <ErrorBoundry>
       <ItemDetails selectedItem={2}
                    getData={getPlanet}
-                   getImage={getImagePlanet} />
+                   getImage={getImagePlanet}>
+        <Record label="Diameter" field="diameter" />
+        <Record label="Population" field="population" />
+        <Record label="Period" field="rotationPeriod" />
+      </ItemDetails>
     </ErrorBoundry>
 
     const starshipDetails = <ErrorBoundry>
       <ItemDetails selectedItem={5}
                   getData={getStarship}
-                  getImage={getImageStarship} />
+                  getImage={getImageStarship}>
+        <Record label="Passengers" field="passengers" />
+        <Record label="Length" field="length" />
+        <Record label="Cost" field="costInCredits" />
+      </ItemDetails>
     </ErrorBoundry>
 
     return(

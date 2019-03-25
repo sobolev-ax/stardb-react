@@ -6,6 +6,19 @@ import ErrorIndicator from '../error-indicator'
 
 import './item-details.css';
 
+const Record = ({ item, label, field }) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{ label }</span>
+      <span>{ item[field] }</span>
+    </li>
+  );
+};
+
+export {
+  Record,
+};
+
 export default class ItemDetails extends Component {
 
   swapiService = new SwapiService();
@@ -73,7 +86,11 @@ export default class ItemDetails extends Component {
     const errorMs = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner /> : null;
     const instruction = hasInstruction ? <span>Select a item from a list</span> : null;
-    const content = hasData ? <ItemView item={ item } image={image} /> : null ;
+    const content = hasData ? <ItemView
+      item={ item }
+      image={image}>
+        { this.props.children }
+      </ItemView> : null;
 
     return (
       <div className="item-details card">

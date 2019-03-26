@@ -1,72 +1,30 @@
-import React, { Component } from 'react';
-import Spinner from '../spinner'
-import ErrorIndicator from '../error-indicator'
+import React from 'react';
+import { WithData } from '../hoc-helpers';
 
 import './item-list.css';
 
-export default class ItemList extends Component {
+const ItemList = (props) => {
 
-  state = {
-    items: null,
-    loading: true,
-    error: false,
-  }
+  const { data, renderItems, onItemSelected } = props;
 
-  componentDidMount() {
-    const { getData } = this.props;
+  console.log('renderItems', data);
 
-    getData()
-      .then(this.onItemsLoaded)
-      .catch(this.onError)
-  }
-
-  renderItems(items) {
-    console.log('renderItems', items);
-    const { renderItems } = this.props;
-
-    return items.map((item) => {
-      const { id, name } = item;
-      return (
-        <li key={id}
-          onClick={() => this.props.onItemSelected(Number(id))}
-          className="list-group-item">
-            {renderItems ? renderItems(item) : name}
-        </li>
-      );
-    });
-  };
-
-  onItemsLoaded = (items) => {
-    console.log('onItemsLoaded', items);
-    this.setState({
-      items,
-      loading: false,
-    });
-  };
-
-  onError = (err) => {
-    console.error('onError:', err);
-    this.setState({
-      loading: false,
-      error: true,
-    });
-  };
-
-  render() {
-    const { items, loading, error } = this.state;
-
-    const hasItems = !(error || loading);
-
-    const errorMs = error ? <ErrorIndicator /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const itemsList = hasItems ? this.renderItems(items) : null;
-
+  const items = data.map((item) => {
+    const { id, name } = item;
     return (
-      <ul className="item-list list-group">
-        { errorMs }
-        { spinner }
-        { itemsList }
-      </ul>
+      <li key={id}
+        onClick={() => onItemSelected(Number(id))}
+        className="list-group-item">
+          {renderItems ? renderItems(item) : name}
+      </li>
     );
-  }
+  });
+
+  return (
+    <ul className="item-list list-group">
+      { items }
+    </ul>
+  );
 }
+
+export default WithData(ItemList);

@@ -1,5 +1,6 @@
+import React from 'react';
 import ItemList from '../item-list';
-import { WithData } from '../hoc-helpers';
+import { WithData, WithChildren } from '../hoc-helpers';
 import SwapiService from '../../services/swapi-service';
 
 const {
@@ -8,9 +9,40 @@ const {
   getAllStarships,
 } = new SwapiService();
 
-const PersonList = WithData(ItemList, getAllPeople);
-const PlanetList = WithData(ItemList, getAllPlanets);
-const StarshipList = WithData(ItemList, getAllStarships);
+const RenderPeople = ( {name, gender, birthYear} ) => {
+  return (<span>{`${name} (${gender} : ${birthYear})`}</span>);
+};
+
+const RenderPlanet = ( {name, diameter, population} ) => {
+  return (
+    <span>
+      {name}
+      <ul>
+        <li>diameter: {diameter}</li>
+        <li>population: {population}</li>
+      </ul>
+    </span>
+  );
+}
+
+const RenderStarship = ( {name} ) => {
+  return `${name}`;
+};
+
+const PersonList = WithData(
+  WithChildren(ItemList, RenderPeople),
+  getAllPeople
+);
+
+const PlanetList = WithData(
+  WithChildren(ItemList, RenderPlanet),
+  getAllPlanets
+);
+
+const StarshipList = WithData(
+  WithChildren(ItemList, RenderStarship),
+  getAllStarships
+);
 
 export {
   PersonList,

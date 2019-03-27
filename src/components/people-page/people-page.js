@@ -37,32 +37,14 @@ export default class PeoplePage extends Component{
             getImageStarship,
           } = this.swapiService;
 
-    const itemListPeoples =
-    <PersonList onItemSelected={this.onItemSelected}>
-      {( {name, gender, birthYear} ) => {
-        return `${name} (${gender} : ${birthYear})`;
-      }}
-    </PersonList>
+    const itemListPeoples = <PersonList
+      onItemSelected={this.onItemSelected} />
 
-    const itemListPlanets =
-    <PlanetList onItemSelected={this.onItemSelected}>
-      {( {name, diameter, population} ) => {
-        return (
-          <span>
-            {name}
-            <ul>
-              <li>diameter: {diameter}</li>
-              <li>population: {population}</li>
-            </ul>
-          </span>
-        );
-      }}
-    </PlanetList>
+    const itemListPlanets = <PlanetList
+      onItemSelected={this.onItemSelected} />
 
-    const itemListStarships =
-    <StarshipList onItemSelected={this.onItemSelected}>
-      { ({ name }) => <span>{ name }</span> }
-    </StarshipList>
+    const itemListStarships = <StarshipList
+      onItemSelected={this.onItemSelected} />
 
     const personDetails = <ErrorBoundry>
       <PersonDetails selectedItem={this.state.selectedItem} />

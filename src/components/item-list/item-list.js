@@ -1,13 +1,12 @@
 import React from 'react';
-import { WithData } from '../hoc-helpers';
 
 import './item-list.css';
 
 const ItemList = (props) => {
 
-  const { data, renderItems, onItemSelected } = props;
+  const { data, onItemSelected, children: renderLabel } = props;
 
-  console.log('renderItems', data);
+  console.log('renderLabel', data);
 
   const items = data.map((item) => {
     const { id, name } = item;
@@ -15,7 +14,7 @@ const ItemList = (props) => {
       <li key={id}
         onClick={() => onItemSelected(Number(id))}
         className="list-group-item">
-          {renderItems ? renderItems(item) : name}
+          {renderLabel ? renderLabel(item) : name}
       </li>
     );
   });
@@ -27,4 +26,4 @@ const ItemList = (props) => {
   );
 }
 
-export default WithData(ItemList);
+export default ItemList;

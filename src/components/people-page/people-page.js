@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import ItemList from '../item-list';
 import ItemDetails, { Record } from '../item-details';
 import ErrorBoundry from '../error-boundry';
 import Row from '../row';
 import SwapiService from '../../services/swapi-service';
+import {
+  PersonList,
+  PlanetList,
+  StarshipList,
+} from '../sw-components';
 
 import './people-page.css';
 
@@ -31,28 +35,32 @@ export default class PeoplePage extends Component{
             getImageStarship,
           } = this.swapiService;
 
-    const itemListPeoples = <ItemList onItemSelected={this.onItemSelected}
-                                      getData={this.swapiService.getAllPeople}
-                                      renderItems={
-                                        ({name, gender, birthYear}) =>
-                                          `${name} (${gender} : ${birthYear})`
-                                      } />
+    const itemListPeoples =
+    <PersonList onItemSelected={this.onItemSelected}>
+      {( {name, gender, birthYear} ) => {
+        return `${name} (${gender} : ${birthYear})`;
+      }}
+    </PersonList>
 
-    const itemListPlanets = <ItemList onItemSelected={this.onItemSelected}
-                                      getData={this.swapiService.getAllPlanets}
-                                      renderItems={
-                                        ({name, diameter, population}) => (
-                                          <span>
-                                            {name}
-                                            <ul>
-                                              <li>diameter: {diameter}</li>
-                                              <li>population: {population}</li>
-                                            </ul>
-                                          </span>
-                                       )} />
+    const itemListPlanets =
+    <PlanetList onItemSelected={this.onItemSelected}>
+      {( {name, diameter, population} ) => {
+        return (
+          <span>
+            {name}
+            <ul>
+              <li>diameter: {diameter}</li>
+              <li>population: {population}</li>
+            </ul>
+          </span>
+        );
+      }}
+    </PlanetList>
 
-    const itemListStarships = <ItemList onItemSelected={this.onItemSelected}
-                                        getData={this.swapiService.getAllStarships} />
+    const itemListStarships =
+    <StarshipList onItemSelected={this.onItemSelected}>
+      { ({ name }) => <span>{ name }</span> }
+    </StarshipList>
 
     const personDetails = <ErrorBoundry>
       <ItemDetails selectedItem={this.state.selectedItem}

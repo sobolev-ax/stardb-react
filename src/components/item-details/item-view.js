@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ItemView= ({ item, image, children }) => {
-  const { id, name, gender, birthYear, eyeColor } = item;
+  const { name } = item;
 
   const imageElement = !image ? null :
     <img className="item-image" alt={name} src={image} />

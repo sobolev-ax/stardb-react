@@ -12,6 +12,20 @@ const WithData = (View) => {
     }
   
     componentDidMount() {
+      this.updateComponent();
+    }
+
+    componentDidUpdate(prevProps) {
+      if (prevProps.getData !== this.props.getData) {
+        this.updateComponent();
+      }
+    }
+
+    updateComponent = () => {
+      this.setState({
+        loading: true,
+      });
+
       this.props.getData()
         .then(this.onDataLoaded)
         .catch(this.onError)

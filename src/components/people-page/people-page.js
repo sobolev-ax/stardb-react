@@ -18,7 +18,7 @@ export default class PeoplePage extends Component{
   swapiService = new SwapiService();
 
   state = {
-    selectedItem: 1,
+    selectedItem: 5,
   }
 
   onItemSelected = (id) => {
@@ -43,11 +43,11 @@ export default class PeoplePage extends Component{
     </ErrorBoundry>
 
     const planetDetails = <ErrorBoundry>
-      <PlanetDetails selectedItem={2} />
+      <PlanetDetails selectedItem={5} />
     </ErrorBoundry>
 
     const starshipDetails = <ErrorBoundry>
-      <StarshipDetails selectedItem={22} />
+      <StarshipDetails selectedItem={5} />
     </ErrorBoundry>
 
     return(
@@ -55,7 +55,6 @@ export default class PeoplePage extends Component{
         <Row left={itemListPeoples} right={personDetails} />
         <Row left={itemListPlanets} right={planetDetails} />
         <Row left={itemListStarships} right={starshipDetails} />
-        <Row left={<h2>Hello</h2>} right={<h2>World!</h2>} />
       </ErrorBoundry>
     );
   };

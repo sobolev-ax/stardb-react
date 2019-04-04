@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/swapi-service'
 import ItemView from './item-view'
 import Spinner from '../spinner'
 import ErrorIndicator from '../error-indicator'
@@ -20,8 +19,6 @@ export {
 };
 
 export default class ItemDetails extends Component {
-
-  swapiService = new SwapiService();
 
   state = {
     item: null,
@@ -73,9 +70,10 @@ export default class ItemDetails extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.selectedItem === this.props.selectedItem) return;
-
-    this.updateItem();
+    if (prevProps.selectedItem !== this.props.selectedItem ||
+        prevProps.getData !== this.props.getData) {
+      this.updateItem();
+    }
   };
 
   render() {

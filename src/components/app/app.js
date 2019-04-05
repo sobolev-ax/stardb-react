@@ -36,8 +36,18 @@ class App extends Component {
             <Header onServiceChange={this.onServiceChange} />
             <RandomPlanet />
 
+            <Route
+              path="/"
+              render={() => <h2>Welcome to StarDB</h2>}
+              exact />
+            
+            <Route path="/people" render={() => <h2>People</h2>} />
             <Route path="/people" component={PeoplePage} />
+
+            <Route path="/planets" render={() => <h2>Planets</h2>} />
             <Route path="/planets" component={PlanetsPage} />
+
+            <Route path="/starships" render={() => <h2>Starships</h2>} />
             <Route path="/starships" component={StarshipsPage} />
 
           </Router>

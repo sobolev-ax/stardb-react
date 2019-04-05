@@ -9,6 +9,10 @@ import { clearTimeout } from 'timers';
 
 export default class RandomPlanet extends Component {
 
+  static defaultProps = {
+    updateInterval: 10000,
+  };
+
   state = {
     planet: {},
     loading: true,
@@ -28,12 +32,13 @@ export default class RandomPlanet extends Component {
   updatePlanet = () => {
     console.log(`updatePlanet`);
     const id = Math.floor(Math.random() * 20) + 2;
+    const { updateInterval } = this.props;
 
     this.swapiService
       .getPlanet(id)
       .then(this.onPlanetLoaded)
       .then(() => {
-        this.interval = setTimeout(this.updatePlanet, 5000); 
+        this.interval = setTimeout(this.updatePlanet, updateInterval); 
       })
       .catch(this.onError);
   };

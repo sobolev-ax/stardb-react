@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
@@ -31,11 +32,15 @@ class App extends Component {
     return (
       <div className="container">
         <SwapiServiceProvider value={this.state.swapiService}>
-          <Header onServiceChange={this.onServiceChange} />
-          <RandomPlanet />
-          <PeoplePage />
-          <PlanetsPage />
-          <StarshipsPage />
+          <Router>
+            <Header onServiceChange={this.onServiceChange} />
+            <RandomPlanet />
+
+            <Route path="/people" component={PeoplePage} />
+            <Route path="/planets" component={PlanetsPage} />
+            <Route path="/starships" component={StarshipsPage} />
+
+          </Router>
         </SwapiServiceProvider>
       </div>
     );

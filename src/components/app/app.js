@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PeoplePage from '../people-page'
+import { PeoplePage, PlanetsPage, StarshipsPage } from '../pages';
 import SwapiService from '../../services/swapi-service';
 import DummySwapiService from '../../services/dummy-swapi-service';
 import { SwapiServiceProvider } from '../swapi-service-context';
@@ -34,6 +34,8 @@ class App extends Component {
           <Header onServiceChange={this.onServiceChange} />
           <RandomPlanet />
           <PeoplePage />
+          <PlanetsPage />
+          <StarshipsPage />
         </SwapiServiceProvider>
       </div>
     );

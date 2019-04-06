@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ErrorBoundry from '../error-boundry';
 import Row from '../row';
 
@@ -7,30 +7,27 @@ import {
   PersonDetails,
 } from '../sw-components';
 
-export default class PeoplePage extends Component{
+const PeoplePage = ({ match, history }) => {
 
-  state = {
-    selectedItem: 5,
-  }
-
-  onItemSelected = (id) => {
+  const onItemSelected = (id) => {
     console.log('onItemSelected', id);
-    this.setState({
-      selectedItem: id,
-    });
+    history.push( String(id) );
   };
 
-  render() {
-    const itemListPeoples = <ErrorBoundry>
-      <PersonList onItemSelected={this.onItemSelected} />
-    </ErrorBoundry>
+  const { id } = match.params;
 
-    const personDetails = <ErrorBoundry>
-      <PersonDetails selectedItem={this.state.selectedItem} />
-    </ErrorBoundry>
 
-    return(
-      <Row left={itemListPeoples} right={personDetails} />
-    );
-  };
+  const itemListPeoples = <ErrorBoundry>
+    <PersonList onItemSelected={onItemSelected} />
+  </ErrorBoundry>
+
+  const personDetails = <ErrorBoundry>
+    <PersonDetails selectedItem={id} />
+  </ErrorBoundry>
+
+  return(
+    <Row left={itemListPeoples} right={personDetails} />
+  );
 };
+
+export default PeoplePage;

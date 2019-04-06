@@ -34,6 +34,7 @@ export default class ItemDetails extends Component {
       this.setState({
         loading: false,
         error: false,
+        item: null,
       });
 
       return;

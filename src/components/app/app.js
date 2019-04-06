@@ -43,7 +43,7 @@ class App extends Component {
               exact />
             
             <Route path="/people" render={() => <h2>People</h2>} />
-            <Route path="/people" component={PeoplePage} />
+            <Route path="/people/:id?" component={PeoplePage} />
 
             <Route path="/planets" render={() => <h2>Planets</h2>} />
             <Route path="/planets" component={PlanetsPage} />

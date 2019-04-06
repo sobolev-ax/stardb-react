@@ -8,7 +8,7 @@ const StarshipsPage = ({ history }) => {
 
   const onItemSelected = (id) => {
     console.log('onItemSelected', id);
-    history.push(`/starships/${id}`);
+    history.push(`${id}`);
   };
 
 

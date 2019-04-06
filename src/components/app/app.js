@@ -9,6 +9,7 @@ import DummySwapiService from '../../services/dummy-swapi-service';
 import { SwapiServiceProvider } from '../swapi-service-context';
 
 import './app.css';
+import StarshipDetails from '../sw-components/starship-details';
 
 class App extends Component {
 
@@ -48,7 +49,13 @@ class App extends Component {
             <Route path="/planets" component={PlanetsPage} />
 
             <Route path="/starships" render={() => <h2>Starships</h2>} />
-            <Route path="/starships" component={StarshipsPage} />
+            <Route path="/starships" component={StarshipsPage} exact />
+            <Route
+              path="/starships/:id"
+              render={({ match }) => {
+                const { id } = match.params;
+                return <StarshipDetails selectedItem={id} />
+              }} />
 
           </Router>
         </SwapiServiceProvider>
